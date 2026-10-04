@@ -9,3 +9,7 @@ wheels/
 # Virtual environments
 .venv
 # processed data
+
+# Local secrets (never commit real API tokens)
+.streamlit/secrets.toml
+artifacts/*.pkl
