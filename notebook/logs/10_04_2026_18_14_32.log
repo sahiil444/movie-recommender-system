@@ -1,0 +1,14 @@
+[ 2026-10-04 18:14:32,999 ] 11 root - INFO - Starting data ingestion
+[ 2026-10-04 18:14:33,559 ] 24 root - INFO - Movies and credits datasets loaded successfully
+[ 2026-10-04 18:14:33,559 ] 35 root - INFO - Starting data validation
+[ 2026-10-04 18:14:33,560 ] 53 root - INFO - Data validation completed successfully
+[ 2026-10-04 18:14:34,111 ] 11 root - INFO - Starting data ingestion
+[ 2026-10-04 18:14:34,736 ] 24 root - INFO - Movies and credits datasets loaded successfully
+[ 2026-10-04 18:14:34,736 ] 35 root - INFO - Starting data validation
+[ 2026-10-04 18:14:34,737 ] 53 root - INFO - Data validation completed successfully
+[ 2026-10-04 18:14:34,737 ] 63 root - INFO - Starting data merging
+[ 2026-10-04 18:14:34,745 ] 72 root - INFO - Data merging completed successfully
+[ 2026-10-04 18:14:36,273 ] 11 root - INFO - Starting data preprocessing
+[ 2026-10-04 18:14:45,038 ] 81 root - INFO - JSON columns converted successfully
+[ 2026-10-04 18:14:45,820 ] 11 root - INFO - Starting data preprocessing
+[ 2026-10-04 18:14:54,616 ] 81 root - INFO - JSON columns converted successfully

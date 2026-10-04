@@ -1,59 +1,78 @@
-from __future__ import annotations
-from pathlib import Path
+import os
+import sys
 import pandas as pd
-
-MOVIE_COLUMNS = ["id", "title", "original_title", "overview", "genres", "keywords"]
-
-DEFAULT_MOVIES_FILENAME = "tmdb_5000_movies.csv"
-DEFAULT_CREDITS_FILENAME = "tmdb_5000_credits.csv"
+from src.movie_recommender_system.logger import logging
+from src.movie_recommender_system.exception import CustomException
 
 
-def get_raw_data_dir() -> Path:
 
-    project_root = Path(__file__).resolve().parents[3]
-    return project_root / "data" / "raw"
+def load_data():
+    try:
+        logging.info("Starting data ingestion")
 
+        movies_path = os.path.join(
+            "..","data","raw","tmdb_5000_movies.csv"
+        )
 
-def load_raw_data(raw_dir: Path | str | None = None) -> tuple[pd.DataFrame, pd.DataFrame]:
+        credits_path = os.path.join(
+            "..","data","raw","tmdb_5000_credits.csv"
+        )
 
-    raw_dir = Path(raw_dir) if raw_dir is not None else get_raw_data_dir()
+        movies_df = pd.read_csv(movies_path)
+        credits_df = pd.read_csv(credits_path)
 
-    movies_path = raw_dir / DEFAULT_MOVIES_FILENAME
-    credits_path = raw_dir / DEFAULT_CREDITS_FILENAME
+        logging.info("Movies and credits datasets loaded successfully")
 
-    for path in (movies_path, credits_path):
-        if not path.is_file():
-            raise FileNotFoundError(f"Raw data file not found: {path}")
-
-    df_movies = pd.read_csv(movies_path)
-    df_credits = pd.read_csv(credits_path)
-    return df_movies, df_credits
-
-
-def merge_datasets(df_movies: pd.DataFrame, df_credits: pd.DataFrame) -> pd.DataFrame:
-    missing = [c for c in MOVIE_COLUMNS if c not in df_movies.columns]
-    if missing:
-        raise KeyError(f"Missing expected movies columns: {missing}")
-    if "movie_id" not in df_credits.columns:
-        raise KeyError("Missing expected credits column: 'movie_id'")
-    if "title" not in df_credits.columns:
-        raise KeyError("Missing expected credits column: 'title'")
-
-    movies = df_movies[MOVIE_COLUMNS]
-    credits = df_credits.drop(columns="title")
-    movies = movies.merge(credits, left_on="id", right_on="movie_id")
-    movies = movies.drop(columns=["id", "original_title"])
-    return movies
+        return movies_df,credits_df
+    
+    except Exception as e:
+        logging.info("Error occurred while loading datasets")
+        raise CustomException(e,sys)
 
 
-def run_data_ingestion(raw_dir: Path | str | None = None) -> pd.DataFrame:
-    """Load the raw TMDB files and return the merged ingestion DataFrame.
+def validate_data(movie_df,credits_df):
+    try:
+        logging.info("Starting data validation")
 
-    Args:
-        raw_dir: Optional override for the raw data directory.
+        if movie_df.empty:
+            raise ValueError("Movies dataset is empty")
+        if credits_df.empty:
+            raise ValueError("Movies dataset is empty")
 
-    Returns:
-        The merged DataFrame of movies and credits.
-    """
-    df_movies, df_credits = load_raw_data(raw_dir)
-    return merge_datasets(df_movies, df_credits)
+        required_movies_columns = ["id", "title"]
+        required_credits_columns = ["movie_id", "title"]
+
+        for column in required_movies_columns:
+            if column not in movie_df.columns:
+                raise ValueError(f"Missing column in movies dataset: {column}")
+
+        for column in required_credits_columns:
+            if column not in credits_df.columns:
+                raise ValueError(f"Missing column in movies dataset: {column}")
+
+        logging.info("Data validation completed successfully")
+
+    except Exception as e:
+        logging.info("Error occurred during data validation")
+        raise CustomException(e,sys)
+
+
+def merge_data(movies_df,credits_df):
+    try:
+
+        logging.info("Starting data merging")
+        credits_df = credits_df.drop(columns=["title"])
+        movies_df = movies_df.merge(
+            credits_df,
+            left_on = "id",
+            right_on = "movie_id"
+        )
+
+
+        logging.info("Data merging completed successfully")
+        return movies_df
+    
+
+    except Exception as e:
+        logging.info("Error occurred during data merging")
+        raise CustomException(e,sys)

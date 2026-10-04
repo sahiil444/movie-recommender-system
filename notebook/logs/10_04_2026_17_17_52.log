@@ -1,0 +1,4 @@
+[ 2026-10-04 17:18:00,865 ] 11 root - INFO - Starting data ingestion
+[ 2026-10-04 17:18:01,433 ] 24 root - INFO - Movies and credits datasets loaded successfully
+[ 2026-10-04 17:18:01,433 ] 35 root - INFO - Starting data validation
+[ 2026-10-04 17:18:01,433 ] 53 root - INFO - Data validation completed successfully
