@@ -1,5 +1,4 @@
 import sys
-
 from src.movie_recommender_system.logger import logging
 from src.movie_recommender_system.exception import CustomException
 
@@ -8,6 +7,9 @@ from src.movie_recommender_system.components.data_ingestion import(
 )
 from src.movie_recommender_system.components.data_preprocessing import preprocess_data
 from src.movie_recommender_system.components.model_trainer import train_model
+from src.movie_recommender_system.utils import save_object
+
+
 
 def run_training_pipeline():
     try:
@@ -23,8 +25,11 @@ def run_training_pipeline():
 
         # Model training
         tfidf, similarity_matrix = train_model(processed_df)
+        save_object("artifacts/processed_df.pkl", processed_df)
+        save_object("artifacts/tfidf.pkl", tfidf)
+        save_object("artifacts/similarity_matrix.pkl", similarity_matrix)
 
-        logging.info("Training pipeline completed successfully")
+        logging.info("Training pipeline completed successfully & Model artifacts saved successfully")
 
         return processed_df, tfidf, similarity_matrix
 

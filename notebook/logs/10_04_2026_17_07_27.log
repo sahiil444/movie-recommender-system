@@ -1,6 +1,0 @@
-[ 2026-10-04 17:07:27,388 ] 11 root - INFO - Starting data ingestion
-[ 2026-10-04 17:07:27,971 ] 24 root - INFO - Movies and credits datasets loaded successfully
-[ 2026-10-04 17:07:27,972 ] 35 root - INFO - Starting data validation
-[ 2026-10-04 17:07:27,973 ] 53 root - INFO - Data validation completed successfully
-[ 2026-10-04 17:07:29,077 ] 63 root - INFO - Starting data merging
-[ 2026-10-04 17:07:29,122 ] 71 root - INFO - Data merging completed successfully
