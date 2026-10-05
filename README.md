@@ -1,5 +1,7 @@
 # Movie Recommender System
 
+[🎬 Live Demo](https://movie-recommender-system-p8et.onrender.com)
+
 A content-based movie recommender built with Streamlit. Pick a movie and the app
 recommends 6 similar movies, with posters and details fetched from the TMDB API.
 
